@@ -1,0 +1,15 @@
+# Secrets and machine-local state
+remote-mysql-password.dpapi
+processed-backup-state.json
+*.bak
+
+# Runtime output
+reports/
+Labmate_Comparison_*.txt
+Python_Launcher_*.log
+
+# Python/editor noise
+__pycache__/
+*.pyc
+.vscode/
+.idea/

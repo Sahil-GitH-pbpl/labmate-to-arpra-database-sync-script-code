@@ -1,0 +1,41 @@
+{
+  "BackupFolder": "C:\\Users\\User\\Desktop\\labmate backup",
+  "BackupFilePattern": "*.bak",
+  "MinimumBackupAgeSeconds": 60,
+  "ReportFolder": "C:\\Users\\User\\Desktop\\labmate backup\\reports",
+  "MaxDetailedRowsPerTable": 0,
+  "SqlServer": {
+    "Server": "DBL-WS-003",
+    "Database": "Bhasin_7001",
+    "UseWindowsAuthentication": true,
+    "Username": "",
+    "PasswordEnvironmentVariable": "LABMATE_SQL_PASSWORD",
+    "BackupWorkingFolder": "D:\\LabmateSQLBackup",
+    "RemoveWorkingBackupAfterSuccess": true
+  },
+  "MySql": {
+    "Exe": "C:\\xampp\\mysql\\bin\\mysql.exe",
+    "Host": "10.1.1.67",
+    "Port": 3306,
+    "Database": "bhasin_7001_new",
+    "Username": "root",
+    "PasswordEnvironmentVariable": "LABMATE_MYSQL_PASSWORD",
+    "PasswordFile": "remote-mysql-password.dpapi"
+  },
+  "Tables": [
+    { "LocalName": "address", "SqlName": "address", "Keys": ["CenterID", "Atype", "code", "ABARID"], "ExpectedLocalOnlyColumns": ["updated_at", "showmrp"] },
+    { "LocalName": "address_allowed_centers", "SqlName": "Address_Allowed_Centers", "Keys": ["AllowedCenterRecID"], "ExpectedLocalOnlyColumns": [] },
+    { "LocalName": "billingtomodeofreceipt", "SqlName": "BillingToModeOfReceipt", "Keys": ["BillingToModeOfReceiptID"], "ExpectedLocalOnlyColumns": ["updated_at"] },
+    { "LocalName": "compcategory", "SqlName": "CompCategory", "Keys": ["CompCatID"], "ExpectedLocalOnlyColumns": ["updated_at"] },
+    { "LocalName": "groupmaster", "SqlName": "GroupMaster", "Keys": ["Gcode"], "ExpectedLocalOnlyColumns": ["updated_at"] },
+    { "LocalName": "modeofpayment", "SqlName": "ModeOfPayment", "Keys": ["ModeID"], "ExpectedLocalOnlyColumns": ["updated_at"] },
+    { "LocalName": "panelrates", "SqlName": "PanelRates", "Keys": ["PanelRateID"], "ExpectedLocalOnlyColumns": ["updated_at", "Active"] },
+    { "LocalName": "subgroup", "SqlName": "Subgroup", "Keys": ["Gcode", "Scode"], "ExpectedLocalOnlyColumns": ["updated_at"] },
+    { "LocalName": "test", "SqlName": "TEST", "Keys": ["Gcode", "Scode", "TestCode"], "ExpectedLocalOnlyColumns": ["updated_at"] },
+    { "LocalName": "testcategory", "SqlName": "TestCategory", "Keys": ["TestCategoryID"], "ExpectedLocalOnlyColumns": ["updated_at"] },
+    { "LocalName": "testprofile", "SqlName": "TestProfile", "Keys": ["ProfileCodeID"], "ExpectedLocalOnlyColumns": ["updated_at"] },
+    { "LocalName": "testprofilebreakuptestsdetails", "SqlName": "TestProfileBreakupTestsDetails", "Keys": ["Gcode", "SCode", "PTCode", "ProfileTestCode", "TestCode"], "ExpectedLocalOnlyColumns": ["updated_at"] },
+    { "LocalName": "testspecimen", "SqlName": "TestSpecimen", "Keys": ["SpecimenID"], "ExpectedLocalOnlyColumns": ["updated_at"] },
+    { "LocalName": "testwarning", "SqlName": "TestWarning", "Keys": ["Method", "Warning", "GCode", "SCode", "TestCode", "Flag"], "ExpectedLocalOnlyColumns": [] }
+  ]
+}
