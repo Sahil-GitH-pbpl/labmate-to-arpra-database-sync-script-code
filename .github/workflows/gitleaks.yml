@@ -1,0 +1,65 @@
+name: Gitleaks Security Scan
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  gitleaks:
+    name: Secret Scanning
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository and PR changes
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+
+      - name: Install Gitleaks v8.24.3
+        shell: bash
+        run: |
+          curl -fsSL -o /tmp/gitleaks.tar.gz \
+            https://github.com/gitleaks/gitleaks/releases/download/v8.24.3/gitleaks_8.24.3_linux_x64.tar.gz
+          echo "9991e0b2903da4c8f6122b5c3186448b927a5da4deef1fe45271c3793f4ee29c  /tmp/gitleaks.tar.gz" | sha256sum --check --strict
+          mkdir -p /tmp/gitleaks-bin
+          tar -xzf /tmp/gitleaks.tar.gz -C /tmp/gitleaks-bin gitleaks
+          echo "/tmp/gitleaks-bin" >> "$GITHUB_PATH"
+
+      - name: Scan all reachable Git history including PR changes
+        id: history
+        continue-on-error: true
+        shell: bash
+        run: |
+          gitleaks git . \
+            --config .gitleaks.toml \
+            --log-opts="--all" \
+            --redact=100
+
+      - name: Scan current project files including PR changes
+        id: files
+        continue-on-error: true
+        shell: bash
+        run: |
+          gitleaks dir . \
+            --config .gitleaks.toml \
+            --redact=100
+
+      - name: Enforce security checks
+        if: always()
+        shell: bash
+        env:
+          HISTORY_RESULT: ${{ steps.history.outcome }}
+          FILES_RESULT: ${{ steps.files.outcome }}
+        run: |
+          echo "History scan: $HISTORY_RESULT"
+          echo "Current files scan: $FILES_RESULT"
+          if [[ "$HISTORY_RESULT" != "success" || "$FILES_RESULT" != "success" ]]; then
+            echo "::error::Gitleaks security checks failed"
+            exit 1
+          fi
